@@ -1,5 +1,6 @@
 package com.siso.springboot.app.controllers;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.nio.file.Files;
@@ -45,11 +46,15 @@ public class ClienteControlller {
 	private IClienteService clienteService;
 
 	private final Logger log = LoggerFactory.getLogger(getClass());
+	
+	
+	private final static String UPLOADS_FOLDER = "uploads";
+	
 
 	@GetMapping(value = "/uploads/{filename:.+}")
 	public ResponseEntity<Resource> verForo(@PathVariable String filename) {
 		Path pathFoto = Paths.get("uploads").resolve(filename).toAbsolutePath();
-		log.info("pathUploads: " + Paths.get("uploads").toAbsolutePath());
+		log.info("pathUploads: " + Paths.get(UPLOADS_FOLDER).toAbsolutePath());
 
 		log.info("pathFoto: " + pathFoto);
 		Resource recurso = null;
@@ -140,9 +145,25 @@ public class ClienteControlller {
 
 		if (!foto.isEmpty()) {
 
+			if (cliente.getId() != null && cliente.getId() > 0 && cliente.getFoto() != null
+					&& cliente.getFoto().length() > 0) {
+
+				String filename = cliente.getFoto();
+
+				Path rootPath = Paths.get(UPLOADS_FOLDER).resolve(filename);
+				Path rootAbsolutPath = rootPath.toAbsolutePath();
+
+				File archivo = rootAbsolutPath.toFile();
+
+				if (archivo.exists() && archivo.canRead()) {
+					archivo.delete();
+				}
+
+			}
+
 			String uniqueFilename = UUID.randomUUID().toString() + "_" + foto.getOriginalFilename();
 
-			Path rootPath = Paths.get("uploads").resolve(uniqueFilename);
+			Path rootPath = Paths.get(UPLOADS_FOLDER).resolve(uniqueFilename);
 
 			Path rootAbsolutPath = rootPath.toAbsolutePath();
 
@@ -175,6 +196,26 @@ public class ClienteControlller {
 	public String eliminar(@PathVariable(value = "id") Long id, RedirectAttributes flash) {
 
 		if (id > 0) {
+
+			Cliente cliente = clienteService.findOne(id);
+
+			if (cliente.getFoto() != null && cliente.getFoto().length() > 0) {
+
+				String filename = cliente.getFoto();
+
+				Path rootPath = Paths.get(UPLOADS_FOLDER).resolve(filename);
+				Path rootAbsolutPath = rootPath.toAbsolutePath();
+
+				File foto = rootAbsolutPath.toFile();
+
+				if (foto.exists() && foto.canRead()) {
+					if (foto.delete()) {
+						flash.addFlashAttribute("info", "Foto " + cliente.getFoto() + " eliminada con exito.");
+					}
+				}
+
+			}
+
 			clienteService.delete(id);
 			flash.addFlashAttribute("success", "Cliente eliminado con exito.");
 		}
