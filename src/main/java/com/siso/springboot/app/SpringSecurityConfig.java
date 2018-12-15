@@ -36,6 +36,7 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter{
 	@Autowired
 	public void configurerGlobal(AuthenticationManagerBuilder build) throws Exception {
 	
+		@SuppressWarnings("deprecation")
 		UserBuilder users = User.withDefaultPasswordEncoder();
 		
 		build.inMemoryAuthentication()
