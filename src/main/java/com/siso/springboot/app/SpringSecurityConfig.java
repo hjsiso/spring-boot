@@ -8,11 +8,14 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.User.UserBuilder;
 
+import com.siso.springboot.app.auth.handler.LoginSuccessHandler;
+
 @Configuration
 public class SpringSecurityConfig extends WebSecurityConfigurerAdapter{
 	
 	
-	
+	@Autowired
+	private LoginSuccessHandler successHandler;
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
@@ -27,6 +30,7 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter{
 			.anyRequest().authenticated()
 			.and()
 				.formLogin()
+				.successHandler(successHandler)
 				.loginPage("/login")
 				.permitAll()
 			.and()
