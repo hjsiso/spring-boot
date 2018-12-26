@@ -26,7 +26,7 @@ import com.siso.springboot.app.models.entity.Cliente;
 import com.siso.springboot.app.models.entity.Factura;
 import com.siso.springboot.app.models.entity.ItemFactura;
 import com.siso.springboot.app.models.entity.Producto;
-import com.siso.springboot.app.services.IClienteService;
+import com.siso.springboot.app.models.service.IClienteService;
 
 @Secured("ROLE_ADMIN")
 @Controller

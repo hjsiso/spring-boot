@@ -40,8 +40,8 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.siso.springboot.app.models.entity.Cliente;
-import com.siso.springboot.app.services.IClienteService;
-import com.siso.springboot.app.services.IUploadFileService;
+import com.siso.springboot.app.models.service.IClienteService;
+import com.siso.springboot.app.models.service.IUploadFileService;
 import com.siso.springboot.app.util.paginator.PageRender;
 
 @Controller

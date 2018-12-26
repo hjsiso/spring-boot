@@ -6,7 +6,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
-import com.siso.springboot.app.services.IUploadFileService;
+import com.siso.springboot.app.models.service.IUploadFileService;
 
 @SpringBootApplication
 public class SpringBootDataJpaApplication implements CommandLineRunner {

@@ -1,4 +1,4 @@
-package com.siso.springboot.app.services;
+package com.siso.springboot.app.models.service;
 
 import java.io.IOException;
 import java.net.MalformedURLException;
